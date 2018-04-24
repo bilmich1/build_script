@@ -25,11 +25,14 @@ REM Activate the environement
 CALL optel_activate.bat
 
 REM Build All + Test
-CALL fastbuild -summary -ide All+Test-x86-Debug All+Test-x86-DebugUnicode > "%cd%\..\%fullstamp%\build_log.txt"
+CALL fastbuild -summary -ide All+Test-x86-Debug All+Test-x86-DebugUnicode > "%cd%\..\%fullstamp%\build_log_Debug_DebugUnicode.txt"
+CALL fastbuild -summary -ide All+Test-x86-Release All+Test-x86-ReleaseUnicode > "%cd%\..\%fullstamp%\build_log_Release_ReleaseUnicode.txt"
 
 REM Test Run
 CALL fastbuild -summary -ide All+TestRun-x86-Debug > "%cd%\..\%fullstamp%\testDebug_log.txt"
 CALL fastbuild -summary -ide All+TestRun-x86-DebugUnicode > "%cd%\..\%fullstamp%\testDebugUnicode_log.txt"
+CALL fastbuild -summary -ide All+TestRun-x86-Release > "%cd%\..\%fullstamp%\testRelease_log.txt"
+CALL fastbuild -summary -ide All+TestRun-x86-ReleaseUnicode > "%cd%\..\%fullstamp%\testReleaseUnicode_log.txt"
 
 REM Check output for each
 REM In Build log
@@ -39,13 +42,24 @@ SET result=FAILED
 SET x86DebugBuildResult=1
 SET x86DebugUnicodeBuildResult=1
 SET x86DebugTestResult=1
-SET x86DebugUnicodeTestResult=1 
+SET x86DebugUnicodeTestResult=1
 
-FINDSTR /C:"FBuild: OK: All+Test-x86-Debug" "%cd%\..\%fullstamp%\build_log.txt"
+SET x86ReleaseBuildResult=1
+SET x86ReleaseUnicodeBuildResult=1
+SET x86ReleaseTestResult=1
+SET x86ReleaseUnicodeTestResult=1 
+
+FINDSTR /C:"FBuild: OK: All+Test-x86-Debug" "%cd%\..\%fullstamp%\build_log_Debug_DebugUnicode.txt"
 IF %ERRORLEVEL%==0 SET x86DebugBuildResult=0
 
-FINDSTR /C:"FBuild: OK: All+Test-x86-DebugUnicode" "%cd%\..\%fullstamp%\build_log.txt"
+FINDSTR /C:"FBuild: OK: All+Test-x86-DebugUnicode" "%cd%\..\%fullstamp%\build_log_Debug_DebugUnicode.txt"
 IF %ERRORLEVEL%==0 SET x86DebugUnicodeBuildResult=0
+
+FINDSTR /C:"FBuild: OK: All+Test-x86-Release" "%cd%\..\%fullstamp%\build_log_Release_ReleaseUnicode.txt"
+IF %ERRORLEVEL%==0 SET x86ReleaseBuildResult=0
+
+FINDSTR /C:"FBuild: OK: All+Test-x86-ReleaseUnicode" "%cd%\..\%fullstamp%\build_log_Release_ReleaseUnicode.txt"
+IF %ERRORLEVEL%==0 SET x86ReleaseUnicodeBuildResult=0
 
 REM In Test Log
 REM     FBuild: OK: All+TestRun-x86-Debug
@@ -56,7 +70,22 @@ IF %ERRORLEVEL%==0 SET x86DebugTestResult=0
 FINDSTR /C:"FBuild: OK: All+TestRun-x86-DebugUnicode"  "%cd%\..\%fullstamp%\testDebugUnicode_log.txt"
 IF %ERRORLEVEL%==0 SET x86DebugUnicodeTestResult=0
 
-IF %x86DebugBuildResult% == 0 IF %x86DebugUnicodeBuildResult% == 0 IF %x86DebugTestResult% == 0 IF %x86DebugUnicodeTestResult% == 0 SET result=PASSED
+FINDSTR /C:"FBuild: OK: All+TestRun-x86-Release" "%cd%\..\%fullstamp%\testRelease_log.txt"
+IF %ERRORLEVEL%==0 SET x86ReleaseTestResult=0
+
+FINDSTR /C:"FBuild: OK: All+TestRun-x86-ReleaseUnicode"  "%cd%\..\%fullstamp%\testReleaseUnicode_log.txt"
+IF %ERRORLEVEL%==0 SET x86ReleaseUnicodeTestResult=0
+
+IF %x86DebugBuildResult% == 0^
+ IF %x86DebugUnicodeBuildResult% == 0^
+ IF %x86DebugTestResult% == 0^
+ IF %x86DebugUnicodeTestResult% == 0^
+ IF %x86ReleaseBuildResult% == 0^
+ IF %x86ReleaseUnicodeBuildResult% == 0^
+ IF %x86ReleaseTestResult% == 0^
+ IF %x86ReleaseUnicodeTestResult% == 0^
+ SET result=PASSED
+
 ECHO result=%result%
 
 REM Check for commit number

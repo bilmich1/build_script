@@ -38,4 +38,4 @@ Installation procedure:
 
 ### Running the script  
 The script can now be run by passing a comma separeted list of email recipient as argument, or by setting a Windows Task Scheduler.  
-`build_script.bat "email1@domain.com,email2@domain.com"
+`build_script.bat "email1@domain.com,email2@domain.com"`

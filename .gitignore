@@ -1,4 +1,0 @@
-# exclude everything
-*
-# except for the build_script
-!build_script.bat

@@ -76,15 +76,7 @@ IF %ERRORLEVEL%==0 SET x86ReleaseTestResult=0
 FINDSTR /C:"FBuild: OK: All+TestRun-x86-ReleaseUnicode"  "%cd%\..\%fullstamp%\testReleaseUnicode_log.txt"
 IF %ERRORLEVEL%==0 SET x86ReleaseUnicodeTestResult=0
 
-IF %x86DebugBuildResult% == 0^
- IF %x86DebugUnicodeBuildResult% == 0^
- IF %x86DebugTestResult% == 0^
- IF %x86DebugUnicodeTestResult% == 0^
- IF %x86ReleaseBuildResult% == 0^
- IF %x86ReleaseUnicodeBuildResult% == 0^
- IF %x86ReleaseTestResult% == 0^
- IF %x86ReleaseUnicodeTestResult% == 0^
- SET result=PASSED
+IF %x86DebugBuildResult% == 0 IF %x86DebugUnicodeBuildResult% == 0 IF %x86DebugTestResult% == 0 IF %x86DebugUnicodeTestResult% == 0 IF %x86ReleaseBuildResult% == 0 IF %x86ReleaseUnicodeBuildResult% == 0 IF %x86ReleaseTestResult% == 0 IF %x86ReleaseUnicodeTestResult% == 0 SET result=PASSED
 
 ECHO result=%result%
 

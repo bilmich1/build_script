@@ -100,7 +100,7 @@ REM Rename the current ouput folder with the build result and commit number
 REN "%fullstamp%" "%fullstamp%_%commitNumber%_%result%"
 
 REM Send an email if the build was a failure
-blat -p gmailsmtp -to "michael.bilodeau@optelgroup.com" -subject "Build Failure" -body "Timestamp: %fullstamp%\n Commit Number:%commitNumer%" -server 127.0.0.1:1099
+blat -p gmailsmtp -to "michael.bilodeau@optelgroup.com" -subject "Build Failure" -body "Timestamp: %fullstamp%|Commit Number:%commitNumber%" -server 127.0.0.1:1099
 
 GOTO:EOF
 

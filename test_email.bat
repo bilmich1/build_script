@@ -6,5 +6,6 @@ SET "HH=%dt:~8,2%" & SET "Min=%dt:~10,2%" & SET "Sec=%dt:~12,2%"
 SET "fullstamp=%YYYY%-%MM%-%DD%_%HH%-%Min%-%Sec%"
 
 SET commitNumber=lerbflwebl33n543
+SET result=FAILED
 
-blat.exe -p gmailsmtp -to "%1" -subject "Build Failure" -body "Timestamp: %fullstamp%|Commit Number: %commitNumber%" -server 127.0.0.1:1099
+IF %result%==FAILED blat.exe -p gmailsmtp -to "%1" -subject "Build Failure" -body "Timestamp: %fullstamp%|Commit Number: %commitNumber%" -server 127.0.0.1:1099

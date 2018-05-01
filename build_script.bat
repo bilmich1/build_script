@@ -76,7 +76,7 @@ IF %ERRORLEVEL%==0 SET x86ReleaseTestResult=0
 FINDSTR /C:"FBuild: OK: All+TestRun-x86-ReleaseUnicode"  "%cd%\..\%fullstamp%\testReleaseUnicode_log.txt"
 IF %ERRORLEVEL%==0 SET x86ReleaseUnicodeTestResult=0
 
-IF %x86DebugBuildResult% == 0 IF %x86DebugUnicodeBuildResult% == 0 IF %x86DebugTestResult% == 0 IF %x86DebugUnicodeTestResult% == 0 IF %x86ReleaseBuildResult% == 0 IF %x86ReleaseUnicodeBuildResult% == 0 IF %x86ReleaseTestResult% == 0 IF %x86ReleaseUnicodeTestResult% == 0 SET result=PASSED
+IF %x86DebugBuildResult%==0 IF %x86DebugUnicodeBuildResult%==0 IF %x86DebugTestResult%==0 IF %x86DebugUnicodeTestResult%==0 IF %x86ReleaseBuildResult%==0 IF %x86ReleaseUnicodeBuildResult%==0 IF %x86ReleaseTestResult%==0 IF %x86ReleaseUnicodeTestResult%==0 SET result=PASSED
 
 ECHO result=%result%
 
@@ -92,7 +92,7 @@ REM Rename the current ouput folder with the build result and commit number
 REN "%fullstamp%" "%fullstamp%_%commitNumber%_%result%"
 
 REM Send an email if the build was a failure
-if %result% == FAILED blat -p gmailsmtp -to "%1" -subject "Build Failure" -body "Timestamp: %fullstamp%|Commit Number: %commitNumber%" -server 127.0.0.1:1099
+IF %result%==FAILED blat.exe -p gmailsmtp -to "%1" -subject "Build Failure" -body "Timestamp: %fullstamp%|Commit Number: %commitNumber%" -server 127.0.0.1:1099
 
 GOTO:EOF
 
